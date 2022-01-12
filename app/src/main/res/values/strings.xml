@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Child Care</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_to_continue">Login to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account">Already have an account</string>
+    <string name="address">Address</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="home">Home</string>
+    <string name="learn">Learn</string>
+    <string name="map">Map</string>
+    <string name="book">Book</string>
+</resources>

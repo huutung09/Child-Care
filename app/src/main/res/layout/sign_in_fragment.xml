@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:gravity="center_horizontal">
+        <TextView
+            style="@style/viewParent.headerText"
+            android:text="@string/welcome_back"
+            android:layout_marginTop="50dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_to_continue"
+            android:textColor="@color/secondary_text"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            style="@style/inputText"
+            android:id="@+id/edt_sign_in_email"
+            android:layout_marginTop="50dp"
+            android:drawableStart="@drawable/ic_message"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            />
+        <EditText
+            style="@style/inputText"
+            android:id="@+id/edt_sign_in_password"
+            android:layout_marginTop="15dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:inputType="textPassword"
+            android:hint="@string/password" />
+        <Button
+            style="@style/buttonRegLog"
+            android:layout_marginTop="40dp"
+            android:text="@string/sign_in"
+            android:id="@+id/btn_sign_in"/>
+        <TextView
+            android:textSize="15sp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_account"
+            android:textColor="@color/link"
+            android:id="@+id/tv_sign_in_create_account"/>
+
+    </LinearLayout>
+</layout>

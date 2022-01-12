@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "745961475733",
+    "project_id": "child-care-1959b",
+    "storage_bucket": "child-care-1959b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745961475733:android:f93e655834096c3934559c",
+        "android_client_info": {
+          "package_name": "com.nine.childcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745961475733-caphm8etah98u48ot4kl79bo717di6ki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nine.childcare",
+            "certificate_hash": "f02e0475238549a848e8d23e63a1090b099f7ecc"
+          }
+        },
+        {
+          "client_id": "745961475733-u9cppmhmaogi4qpc7spv1oal1522sies.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0_JfRvWXRWODwLFR4w4sJMOV3HuUSnNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745961475733-u9cppmhmaogi4qpc7spv1oal1522sies.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
