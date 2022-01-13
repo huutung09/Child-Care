@@ -7,4 +7,7 @@
     <color name="link">#C58BF2</color>
     <color name="button_color_1">#6bcdfd</color>
     <color name="button_color_2">#45a9da</color>
+    <color name="true_ans">#76c893</color>
+    <color name="false_ans">#d00000</color>
+    <color name="nav_clicked">#e76f51</color>
 </resources>

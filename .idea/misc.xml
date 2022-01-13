@@ -4,14 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2078125" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_ans.xml" value="0.2078125" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_ans_false.xml" value="0.2078125" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_ans_true.xml" value="0.2078125" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_button.xml" value="0.2078125" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_input.xml" value="0.2078125" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/drawable/background_ques.xml" value="0.2078125" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/activity_maps.xml" value="0.19166666666666668" />
-        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/english_learning_fragment.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/english_learning_fragment.xml" value="0.22" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/fragment_maps.xml" value="0.18871794871794872" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/home_activity.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/home_fragment.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/quiz_fragment.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/sign_activity.xml" value="0.1" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/sign_in_fragment.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/9999/Desktop/AndroidStudioProjects/Java/projects/ChildCare/app/src/main/res/layout/sign_up_fragment.xml" value="0.22" />

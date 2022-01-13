@@ -6,18 +6,15 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.nine.childcare.Constants;
-import com.nine.childcare.model.Word;
+import com.nine.childcare.model.Question;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper {
     private final Context mContext;
@@ -93,44 +90,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
         super.close();
     }
 
-//    public Question getQuestion(int level) {
-//        openDatabase();
-//        String sql_query = "SELECT * FROM Question WHERE level = '" + level + "' ORDER BY RANDOM() LIMIT 1";
-//        Cursor cursor = questionDatabase.rawQuery(sql_query, null);
-//        if (cursor == null || cursor.getCount() == 0) {
-//            return null;
-//        }
-//        cursor.moveToFirst();
-//        String ques = cursor.getString(cursor.getColumnIndexOrThrow("question"));
-//        String caseA = cursor.getString(cursor.getColumnIndexOrThrow("casea"));
-//        String caseB = cursor.getString(cursor.getColumnIndexOrThrow("caseb"));
-//        String caseC = cursor.getString(cursor.getColumnIndexOrThrow("casec"));
-//        String caseD = cursor.getString(cursor.getColumnIndexOrThrow("cased"));
-//        int trueCase = cursor.getInt(cursor.getColumnIndexOrThrow("truecase"));
-//        Question question = new Question(ques, caseA, caseB, caseC, caseD, level, trueCase);
-//        closeDataBase();
-//        return question;
-//    }
-
-    public List<Word> getWordMean(String word) {
+    public Question getQuestion(int id) {
         openDatabase();
-        List<Word> words = new ArrayList<>();
-        String sql_query = "SELECT * FROM anhviet WHERE tu like '" + word + "%' LIMIT 10";
+        String sql_query = "SELECT * FROM Question WHERE id = '" + id + "'";
         Cursor cursor = database.rawQuery(sql_query, null);
         if (cursor == null || cursor.getCount() == 0) {
             return null;
         }
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast() && words.size() <= 10) {
-                String engWord = cursor.getString(cursor.getColumnIndexOrThrow("tu"));
-                String wordMean = cursor.getString(cursor.getColumnIndexOrThrow("nghia"));
-                Word newWord = new Word(engWord, wordMean);
-                words.add(newWord);
-//                Log.e("out", "getWordMean: " + newWord.getWord());
-            }
-        }
+        cursor.moveToFirst();
+        String ques = cursor.getString(cursor.getColumnIndexOrThrow("CauHoi"));
+        String caseA = cursor.getString(cursor.getColumnIndexOrThrow("A"));
+        String caseB = cursor.getString(cursor.getColumnIndexOrThrow("B"));
+        String caseC = cursor.getString(cursor.getColumnIndexOrThrow("C"));
+        String caseD = cursor.getString(cursor.getColumnIndexOrThrow("D"));
+        String trueCase = cursor.getString(cursor.getColumnIndexOrThrow("DapAnDung"));
+        Question question = new Question(id, ques, caseA, caseB, caseC, caseD, trueCase);
         closeDataBase();
-        return words;
+        return question;
+    }
+
+    public String getWordMean(String word) {
+        openDatabase();
+        String sql_query = "SELECT * FROM anhviet WHERE tu = '" + word + " '";
+        Cursor cursor = database.rawQuery(sql_query, null);
+        if (cursor == null || cursor.getCount() == 0) {
+            return null;
+        }
+        cursor.moveToFirst();
+        String mean = cursor.getString(cursor.getColumnIndexOrThrow("nghia"));
+        closeDataBase();
+        return mean;
     }
 
     @Override
