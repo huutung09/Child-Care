@@ -1,8 +1,6 @@
 package com.nine.childcare.views.act;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.nine.childcare.Constants;
@@ -20,7 +18,7 @@ public class SignActivity extends BaseActivity<SignActivityBinding> {
             case Constants.KEY_SHOW_SIGN_IN:
                 SignInFragment signInFragment = new SignInFragment();
                 signInFragment.setCallBack(this);
-                showFragment(R.id.sign_container_view, signInFragment, false);
+                replaceFragment(R.id.sign_container_view, signInFragment, false);
                 break;
             case Constants.KEY_SHOW_SIGN_UP:
                 SignUpFragment signUpFragment = new SignUpFragment();
@@ -28,12 +26,12 @@ public class SignActivity extends BaseActivity<SignActivityBinding> {
                 if (data != null) {
                     signUpFragment.setLatLng((LatLng) data);
                 }
-                showFragment(R.id.sign_container_view, signUpFragment, false);
+                replaceFragment(R.id.sign_container_view, signUpFragment, false);
                 break;
             case Constants.KEY_SHOW_MAP:
                 MapsFragment mapsFragment = new MapsFragment();
                 mapsFragment.setCallBack(this);
-                showFragment(R.id.sign_container_view, mapsFragment, false);
+                replaceFragment(R.id.sign_container_view, mapsFragment, true);
                 break;
             case Constants.KEY_SHOW_HOME_ACT:
                 Intent homeIntent = new Intent(this, HomeActivity.class);
@@ -46,7 +44,7 @@ public class SignActivity extends BaseActivity<SignActivityBinding> {
     protected void initViews() {
         SignInFragment signInFragment = new SignInFragment();
         signInFragment.setCallBack(this);
-        showFragment(R.id.sign_container_view, signInFragment, false);
+        replaceFragment(R.id.sign_container_view, signInFragment, false);
     }
 
     @Override

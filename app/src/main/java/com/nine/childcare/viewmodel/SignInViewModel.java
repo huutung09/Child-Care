@@ -11,10 +11,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignInViewModel extends BaseViewModel {
-    private MutableLiveData<FirebaseUser> userMutableLiveData;
+    private MutableLiveData<FirebaseUser> userMutableLiveData = new MutableLiveData<>();
 
     public SignInViewModel() {
-        userMutableLiveData = new MutableLiveData<>();
         if (firebaseAuth.getCurrentUser() != null) {
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
             loggedOut.postValue(false);

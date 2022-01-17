@@ -15,8 +15,8 @@ import com.nine.childcare.model.Question;
 
 
 public class QuizViewModel extends BaseViewModel {
+    private MutableLiveData<Question> questionMutableLiveData = new MutableLiveData<>();
     private int mId;
-    private MutableLiveData<Question> questionMutableLiveData;
     private Question currentQues;
     private DatabaseReference quesIdRef;
 
@@ -36,12 +36,9 @@ public class QuizViewModel extends BaseViewModel {
 
             }
         });
-        questionMutableLiveData = new MutableLiveData<>();
-        Log.e("out", "QuizViewModel: " + "constructer");
     }
 
     public void nextQuestion() {
-        Log.e("out", "QuizViewModel: " + "next qus");
         mId++;
         currentQues = databaseManager.getQuestion(mId);
         questionMutableLiveData.setValue(currentQues);

@@ -6,11 +6,7 @@ import com.nine.childcare.App;
 import com.nine.childcare.manager.DatabaseManager;
 
 public class EnglishLearningViewModel extends BaseViewModel{
-    private MutableLiveData<String> searchWord;
-
-    public EnglishLearningViewModel() {
-        searchWord = new MutableLiveData<>();
-    }
+    private MutableLiveData<String> searchWord = new MutableLiveData<>();
 
     public void getWordFromDataBase(String s) {
         String wordMean = databaseManager.getWordMean(s.toLowerCase());

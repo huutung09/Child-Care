@@ -32,7 +32,7 @@ public abstract class BaseActivity<BD extends ViewDataBinding> extends AppCompat
     protected  abstract void initViews();
     protected abstract int getLayoutId();
 
-    protected void showFragment(int layoutID, Fragment fragment, boolean addToBackStack){
+    protected void replaceFragment(int layoutID, Fragment fragment, boolean addToBackStack){
         if (!isFinishing() && !isDestroyed()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(layoutID, fragment);
@@ -41,5 +41,15 @@ public abstract class BaseActivity<BD extends ViewDataBinding> extends AppCompat
             }
             ft.commit();
         }
+    }
+
+    protected void showAndHideFragment(Fragment activeFragment, Fragment usingFragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(activeFragment).show(usingFragment);
+        ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

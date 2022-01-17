@@ -43,6 +43,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
         mViewModel.getSearchWord().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                binding.englishWordMean.setText("");
                 handleMeanString(s);
             }
         });
@@ -74,7 +75,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
         });
     }
 
-    ActivityResultLauncher<Intent> speakActivityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> speakActivityResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -94,7 +95,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
     private void handleMeanString (String mean) {
         String[] split = mean.substring(1).split("\n");
         for (String s : split) {
-            Spannable word = new SpannableString("\n" + StringUtils.capitalize(s.substring(1).trim().replace("+", "\n")));
+            Spannable word = new SpannableString("\n" + StringUtils.capitalize(s.substring(1).trim().replace("+", "\n-")));
             if (s.trim().startsWith("*")) {
                 word.setSpan(new ForegroundColorSpan(Color.BLUE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else if (s.trim().startsWith("-")) {

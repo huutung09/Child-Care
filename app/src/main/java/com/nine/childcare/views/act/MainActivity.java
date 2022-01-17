@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     protected void initViews() {
         SplashFragment splashFragment = new SplashFragment();
         splashFragment.setCallBack(this);
-        showFragment(R.id.container_view, splashFragment, false);
+        replaceFragment(R.id.container_view, splashFragment, false);
     }
 
     @Override

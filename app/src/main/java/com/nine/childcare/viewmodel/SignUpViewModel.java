@@ -13,12 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.nine.childcare.model.User;
 
 public class SignUpViewModel extends BaseViewModel{
-    private MutableLiveData<FirebaseUser> userMutableLiveData;
+    private MutableLiveData<FirebaseUser> userMutableLiveData = new MutableLiveData<>();
     private DatabaseReference databaseReference;
-
-    public SignUpViewModel() {
-        userMutableLiveData = new MutableLiveData<>();
-    }
 
     public void signUp(String name, String email, String password, String cPassword, double latitude, double longitude, String address) {
         if (!password.equals(cPassword)){

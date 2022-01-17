@@ -22,7 +22,13 @@ public class SplashFragment extends BaseFragment<SplashFragmentBinding, SplashVi
 
     @Override
     protected void initViews() {
-       mViewModel.getSplashState().observe(getViewLifecycleOwner(), aBoolean -> gotoSignAct());
+        mViewModel.changeState();
+        mViewModel.getSplashState().observe(getViewLifecycleOwner(), aBoolean -> gotoSignAct());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     private void gotoSignAct(){

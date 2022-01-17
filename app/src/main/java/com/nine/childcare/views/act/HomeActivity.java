@@ -1,22 +1,37 @@
 package com.nine.childcare.views.act;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.databinding.HomeActivityBinding;
+import com.nine.childcare.receivers.AlarmReceiver;
+import com.nine.childcare.viewmodel.HomeViewModel;
 import com.nine.childcare.views.fragment.EnglishLearningFragment;
 import com.nine.childcare.views.fragment.QuizFragment;
+import com.nine.childcare.views.fragment.VideoFragment;
 
 public class HomeActivity extends BaseActivity<HomeActivityBinding> {
+    private HomeViewModel mViewModel;
+    private AlarmManager alarmManager;
+    EnglishLearningFragment englishLearningFragment = new EnglishLearningFragment();
+    QuizFragment quizFragment = new QuizFragment();
+    VideoFragment videoFragment = new VideoFragment();
+
     @Override
     protected void initViews() {
-        EnglishLearningFragment englishLearningFragment = new EnglishLearningFragment();
-        englishLearningFragment.setCallBack(this);
-        showFragment(R.id.home_container_view, englishLearningFragment, false);
+        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        replaceFragment(R.id.home_container_view, englishLearningFragment, false);
         BottomNavigationView bnv = findViewById(R.id.navigation);
         bnv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -24,19 +39,34 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.navigation_learn:
-                        EnglishLearningFragment englishLearningFragment1 = new EnglishLearningFragment();
-                        showFragment(R.id.home_container_view, englishLearningFragment, true);
+                        replaceFragment(R.id.home_container_view, englishLearningFragment, true);
                         break;
                     case R.id.navigation_quiz:
-                        QuizFragment quizFragment = new QuizFragment();
-                        showFragment(R.id.home_container_view, quizFragment, true);
+                        replaceFragment(R.id.home_container_view, quizFragment, true);
+                        break;
+                    case R.id.navigation_video:
+                        replaceFragment(R.id.home_container_view, videoFragment, true);
                         break;
                 }
                 return true;
             }
         });
+        binding.btnLogout.setOnClickListener(v -> mViewModel.signOut());
+        mViewModel.getLoggedOut().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Intent intent = new Intent(HomeActivity.this, SignActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    public void setUpFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.home_container_view, videoFragment, null).hide(videoFragment);
+        ft.add(R.id.home_container_view, quizFragment, null).hide(quizFragment);
+        ft.add(R.id.home_container_view, englishLearningFragment, null);
+    }
 
 
     @Override
@@ -46,6 +76,36 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
 
     @Override
     public void callBack(String key, Object data) {
+    }
 
+    public void makeAlarmNotification() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        long timeAtCurrent = System.currentTimeMillis();
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtCurrent + Constants.ALARM_TIME * 1000, pendingIntent);
+    }
+
+    public void cancelAlarmNotification(){
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        if (alarmManager == null) {
+            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        }
+        alarmManager.cancel(pendingIntent);
+    }
+
+    @Override
+    protected void onStart() {
+        cancelAlarmNotification();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        makeAlarmNotification();
+        super.onStop();
     }
 }

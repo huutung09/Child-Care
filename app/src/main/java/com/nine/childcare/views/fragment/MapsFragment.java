@@ -1,16 +1,24 @@
 package com.nine.childcare.views.fragment;
 
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
+
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,30 +39,24 @@ import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.interfaces.OnActionCallBack;
 
-import java.io.IOException;
-import java.util.List;
+
 
 public class MapsFragment extends Fragment {
     private OnActionCallBack callBack;
     private GoogleMap mMap;
+    private boolean locationPermissionGranted;
+    private Location lastKnownLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     private OnMapReadyCallback readyCallback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
 //            LatLng sydney = new LatLng(-34, 151);
 //            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             mMap = googleMap;
+            updateLocationUI();
+            getDeviceLocation();
         }
     };
 
@@ -74,28 +76,98 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(readyCallback);
         }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
         view.findViewById(R.id.btn_map).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LatLng latLng = mMap.getCameraPosition().target;
-//                Geocoder geocoder = new Geocoder(requireActivity());
-//                try {
-//                    List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-//                    if (addressList != null && addressList.size() > 0) {
-//                        String locality = addressList.get(0).getAddressLine(0);
-//                        if (!locality.isEmpty()){
-//                            Toast.makeText(requireActivity(), locality , Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 gotoSignUpFragment(latLng);
             }
         });
-        handleCurrentLocation();
     }
+
+    private void updateLocationUI() {
+        if (mMap == null) {
+            return;
+        }
+        try {
+            if (locationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private void getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true;
+        } else {
+//            ActivityCompat.requestPermissions(requireActivity(),
+//                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+//                    Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            requestPermissions(new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        locationPermissionGranted = false;
+        switch (requestCode) {
+            case Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+        getDeviceLocation();
+    }
+
+    private void getDeviceLocation() {
+        try {
+            if (locationPermissionGranted) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(requireActivity(), new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            lastKnownLocation = task.getResult();
+                            if (lastKnownLocation != null) {
+                                LatLng current = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                mMap.addMarker(new MarkerOptions().position(current).title("You are here"));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                                mMap.animateCamera(CameraUpdateFactory.zoomTo(Constants.DEFAULT_ZOOM), 2000, null);
+                            }
+                        } else {
+//                            Log.d(TAG, "Current location is null. Using defaults.");
+//                            Log.e(TAG, "Exception: %s", task.getException());
+                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage(), e);
+        }
+    }
+
+
+
+
 
     private void handleCurrentLocation(){
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -104,22 +176,9 @@ public class MapsFragment extends Fragment {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    if (location != null) {
-//                        try {
-//                            Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
-//                            List<Address> addresses = geocoder.getFromLocation(
-//                                    location.getLatitude(), location.getLongitude(), 1
-//                            );
-//                            binding.edtSignUpAddress.setText(addresses.get(0).getAddressLine(0));
-//                            currentLatitude = addresses.get(0).getLatitude();
-//                            currentLongitude = addresses.get(0).getLongitude();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        makeToast("no location");
-                        LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+                    lastKnownLocation  = task.getResult();
+                    if (lastKnownLocation != null) {
+                        LatLng current = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                         mMap.addMarker(new MarkerOptions().position(current).title("You are here"));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
