@@ -11,5 +11,6 @@ public interface YoutubeApiInterface {
     @GET(Constants.SEARCH)
     Call<FullYoutube> getYoutubeData(@Query("key") String key,
                                      @Query("part") String part,
-                                     @Query("q") String q);
+                                     @Query("q") String q,
+                                    @Query("pageToken") String pageToken);
 }

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nine.childcare">
 
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,6 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 
     <application
         android:name=".App"
@@ -32,6 +37,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".views.act.MainActivity"
             android:exported="true">
@@ -41,17 +47,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.act.SignActivity"
+        <activity
+            android:name=".views.act.SignActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".views.act.HomeActivity"
+        <activity
+            android:name=".views.act.HomeActivity"
             android:configChanges="orientation|screenSize" />
-        <receiver android:name=".receivers.AlarmReceiver"/>
-    </application>
 
+        <receiver android:name=".receivers.AlarmReceiver" />
+    </application>
     <queries>
         <intent>
-            <action android:name="android.intent.action.TTS_SERVICE" />
+            <action android:name="com.google.android.youtube.api.service.START" />
         </intent>
     </queries>
-
 </manifest>

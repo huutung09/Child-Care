@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,14 +25,16 @@ import com.nine.childcare.views.fragment.VideoFragment;
 public class HomeActivity extends BaseActivity<HomeActivityBinding> {
     private HomeViewModel mViewModel;
     private AlarmManager alarmManager;
-    EnglishLearningFragment englishLearningFragment = new EnglishLearningFragment();
-    QuizFragment quizFragment = new QuizFragment();
-    VideoFragment videoFragment = new VideoFragment();
+    private EnglishLearningFragment englishLearningFragment = new EnglishLearningFragment();
+    private QuizFragment quizFragment = new QuizFragment();
+    private VideoFragment videoFragment = new VideoFragment();
+    private Fragment activeFragment;
 
     @Override
     protected void initViews() {
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        replaceFragment(R.id.home_container_view, englishLearningFragment, false);
+//        replaceFragment(R.id.home_container_view, englishLearningFragment, false);
+        setUpFragment();
         BottomNavigationView bnv = findViewById(R.id.navigation);
         bnv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -39,13 +42,19 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.navigation_learn:
-                        replaceFragment(R.id.home_container_view, englishLearningFragment, true);
+//                        replaceFragment(R.id.home_container_view, englishLearningFragment, true);
+                        showAndHideFragment(activeFragment, englishLearningFragment);
+                        activeFragment = englishLearningFragment;
                         break;
                     case R.id.navigation_quiz:
-                        replaceFragment(R.id.home_container_view, quizFragment, true);
+//                        replaceFragment(R.id.home_container_view, quizFragment, true);
+                        showAndHideFragment(activeFragment, quizFragment);
+                        activeFragment = quizFragment;
                         break;
                     case R.id.navigation_video:
-                        replaceFragment(R.id.home_container_view, videoFragment, true);
+//                        replaceFragment(R.id.home_container_view, videoFragment, true);
+                        showAndHideFragment(activeFragment, videoFragment);
+                        activeFragment = videoFragment;
                         break;
                 }
                 return true;
@@ -66,6 +75,8 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
         ft.add(R.id.home_container_view, videoFragment, null).hide(videoFragment);
         ft.add(R.id.home_container_view, quizFragment, null).hide(quizFragment);
         ft.add(R.id.home_container_view, englishLearningFragment, null);
+        activeFragment = englishLearningFragment;
+        ft.commit();
     }
 
 
@@ -84,7 +95,8 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         long timeAtCurrent = System.currentTimeMillis();
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtCurrent + Constants.ALARM_TIME * 1000, pendingIntent);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtCurrent + Constants.ALARM_TIME * 1000, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, timeAtCurrent + AlarmManager.INTERVAL_DAY, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     public void cancelAlarmNotification(){
