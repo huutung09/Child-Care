@@ -4,18 +4,15 @@ import android.view.View;
 import android.widget.AbsListView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
-import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.adapters.VideoAdapter;
 import com.nine.childcare.databinding.VideoFragmentBinding;
+import com.nine.childcare.interfaces.VideoAdapterListener;
 import com.nine.childcare.model.ItemYoutube;
 import com.nine.childcare.viewmodel.VideoViewModel;
 
@@ -28,6 +25,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
     int pastVisibleItems, visibleItemCount, totalItemCount;
     private Boolean isScrolling = false;
     private String searchTerm = "";
+    private YoutubePlayerFragment youtubePlayerFragment;
 
 
     @Override
@@ -48,6 +46,25 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
         binding.videoRecycleView.setLayoutManager(linearLayoutManager);
         videoAdapter = new VideoAdapter(mViewModel.getItemYoutubeLiveData().getValue());
         binding.videoRecycleView.setAdapter(videoAdapter);
+        videoAdapter.setListener(new VideoAdapterListener() {
+            @Override
+            public void onClick(String youtubeVideoId) {
+                if (youtubePlayerFragment == null) {
+                    youtubePlayerFragment = YoutubePlayerFragment.newInstance();
+                    youtubePlayerFragment.setYoutubeVideoId(youtubeVideoId);
+                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.youtube_player_container, youtubePlayerFragment, "tag");
+                    fragmentTransaction.addToBackStack("add");
+                    fragmentTransaction.commit();
+                } else {
+                    youtubePlayerFragment.changeVid(youtubeVideoId);
+                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                    fragmentTransaction.show(youtubePlayerFragment);
+                    fragmentTransaction.commit();
+                }
+
+            }
+        });
 
         binding.videoRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -80,36 +97,6 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
             }
         });
 
-        YouTubePlayerSupportFragmentX youTubePlayerSupportFragmentX = (YouTubePlayerSupportFragmentX) getChildFragmentManager()
-                        .findFragmentById(R.id.youtube_fragment);
-
-        youTubePlayerSupportFragmentX.initialize(Constants.API_KEY,
-                new YouTubePlayer.OnInitializedListener() {
-                    @Override
-                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                        youTubePlayer.loadVideo("iM6HcjOiDPk");
-                        youTubePlayer.play();
-                    }
-
-                    @Override
-                    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                        makeToast("failed");
-                    }
-                });
-
-//        binding.youtubePlayer.initialize(Constants.API_KEY,
-//                new YouTubePlayer.OnInitializedListener() {
-//                    @Override
-//                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-//                        youTubePlayer.loadVideo("iM6HcjOiDPk");
-//                        youTubePlayer.play();
-//                    }
-//
-//                    @Override
-//                    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-//                        makeToast("failed");
-//                    }
-//                });
 
         mViewModel.getItemYoutubeLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<ItemYoutube>>() {
             @Override
@@ -118,4 +105,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
             }
         });
     }
+
+
+
 }

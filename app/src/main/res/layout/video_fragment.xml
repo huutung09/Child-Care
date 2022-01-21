@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="56dp">
 
-    <EditText
-        android:id="@+id/edt_video_search"
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/video_motion_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/video"/>
-    <Button
-        android:id="@+id/btn_video_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/video"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="56dp"
+        app:layoutDescription="@xml/video_fragment_xml_video_motion_layout_scene">
 
-    <fragment
-        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"
-        android:id="@+id/youtube_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/video_recycle_view"/>
+        <LinearLayout
+            android:id="@+id/hide_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <EditText
+                android:id="@+id/edt_video_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/video"
+                 />
 
-</LinearLayout>
+            <Button
+                android:id="@+id/btn_video_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/video"
+              />
+
+            <Button
+                android:id="@+id/test_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/video_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hide_layout" />
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/youtube_player_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/backgroundDim"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="10dp" />
+        </FrameLayout>
+
+
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

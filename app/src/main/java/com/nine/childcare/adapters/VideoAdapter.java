@@ -12,12 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nine.childcare.R;
+import com.nine.childcare.interfaces.VideoAdapterListener;
 import com.nine.childcare.model.ItemYoutube;
 
 import java.util.ArrayList;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private ArrayList<ItemYoutube> items;
+    private VideoAdapterListener listener;
+
+    public void setListener(VideoAdapterListener listener) {
+        this.listener = listener;
+    }
 
     public VideoAdapter(ArrayList<ItemYoutube> items) {
         this.items = items;
@@ -38,6 +44,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         Glide.with(holder.itemView.getContext())
                 .load(i.getSnippet().getThumbnails().getMedium().getUrl())
                 .into(holder.itemRowImg);
+        holder.id = i.getId().getVideoId();
     }
 
     @Override
@@ -49,6 +56,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public LinearLayout itemRowContainer;
         public ImageView itemRowImg;
         public TextView itemRowTitle, itemRowTime;
+        public String id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +64,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             itemRowImg = itemView.findViewById(R.id.row_item_img);
             itemRowTitle = itemView.findViewById(R.id.row_item_tittle);
             itemRowTime = itemView.findViewById(R.id.row_item_time);
+            itemRowContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(id);
+                    }
+                }
+            });
         }
     }
 }
