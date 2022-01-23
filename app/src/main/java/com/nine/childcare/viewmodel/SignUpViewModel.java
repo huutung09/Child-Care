@@ -30,6 +30,7 @@ public class SignUpViewModel extends BaseViewModel{
         }
     }
 
+    // up user data to firebase
     private void handleSignUpUser(String name, String email, String password, double latitude, double longitude, String address) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

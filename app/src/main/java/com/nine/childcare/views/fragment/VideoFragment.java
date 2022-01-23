@@ -27,7 +27,6 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
     private String searchTerm = "";
     private YoutubePlayerFragment youtubePlayerFragment;
 
-
     @Override
     protected Class<VideoViewModel> getViewModelClass() {
         return VideoViewModel.class;
@@ -48,20 +47,20 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
         binding.videoRecycleView.setAdapter(videoAdapter);
         videoAdapter.setListener(new VideoAdapterListener() {
             @Override
-            public void onClick(String youtubeVideoId) {
+            public void onClick(ItemYoutube youtubeVideo) {
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                // if first time play video, add new fragment
+                //second time just change video
                 if (youtubePlayerFragment == null) {
                     youtubePlayerFragment = YoutubePlayerFragment.newInstance();
-                    youtubePlayerFragment.setYoutubeVideoId(youtubeVideoId);
-                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                    youtubePlayerFragment.setCurrentVideo(youtubeVideo);
                     fragmentTransaction.add(R.id.youtube_player_container, youtubePlayerFragment, "tag");
                     fragmentTransaction.addToBackStack("add");
-                    fragmentTransaction.commit();
                 } else {
-                    youtubePlayerFragment.changeVid(youtubeVideoId);
-                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                    youtubePlayerFragment.changeVid(youtubeVideo);
                     fragmentTransaction.show(youtubePlayerFragment);
-                    fragmentTransaction.commit();
                 }
+                fragmentTransaction.commit();
 
             }
         });
@@ -75,6 +74,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
                 }
             }
 
+            // if scroll at bottom of recycle view -> get new video
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -83,7 +83,6 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
                 pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
                 if (isScrolling && (visibleItemCount + pastVisibleItems == totalItemCount)) {
                     isScrolling = false;
-                    makeToast("end");
                     mViewModel.getVideoList(searchTerm, false);
                 }
             }
@@ -96,14 +95,14 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
                 mViewModel.getVideoList(searchTerm, true);
             }
         });
-
-
         mViewModel.getItemYoutubeLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<ItemYoutube>>() {
             @Override
             public void onChanged(ArrayList<ItemYoutube> itemYoutubes) {
                 videoAdapter.notifyDataSetChanged();
             }
         });
+        mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), this::makeToast);
+
     }
 
 

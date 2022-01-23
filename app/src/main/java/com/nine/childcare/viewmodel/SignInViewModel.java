@@ -14,6 +14,7 @@ public class SignInViewModel extends BaseViewModel {
     private MutableLiveData<FirebaseUser> userMutableLiveData = new MutableLiveData<>();
 
     public SignInViewModel() {
+        // check if already sign in
         if (firebaseAuth.getCurrentUser() != null) {
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
             loggedOut.postValue(false);

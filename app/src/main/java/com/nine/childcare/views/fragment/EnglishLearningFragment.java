@@ -10,7 +10,6 @@ import android.speech.RecognizerIntent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -51,6 +50,8 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
             @Override
             public void onClick(View v) {
                 mViewModel.getWordFromDataBase(binding.englishWordSearch.getText().toString().trim());
+
+                // hide keyboard
                 View view = requireActivity().getCurrentFocus();
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -62,6 +63,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
         binding.btnSpeakEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // start a recognize speech
                 Intent speakIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 speakIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 speakIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text");
@@ -75,6 +77,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
         });
     }
 
+    // get result of recognize speech intent
     private final ActivityResultLauncher<Intent> speakActivityResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         new ActivityResultCallback<ActivityResult>() {
@@ -92,6 +95,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
         }
     );
 
+    // deal with string
     private void handleMeanString (String mean) {
         String[] split = mean.substring(1).split("\n");
         for (String s : split) {

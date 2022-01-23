@@ -9,11 +9,6 @@ import com.nine.childcare.views.fragment.SplashFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
-//    @Override
-//    protected Class<MainViewModel> getViewModelClass() {
-//        return MainViewModel.class;
-//    }
-
     @Override
     protected void initViews() {
         SplashFragment splashFragment = new SplashFragment();

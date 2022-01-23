@@ -1,9 +1,5 @@
 package com.nine.childcare.views.fragment;
 
-import android.os.Handler;
-
-import androidx.lifecycle.Observer;
-
 import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.databinding.SplashFragmentBinding;

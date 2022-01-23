@@ -2,8 +2,6 @@ package com.nine.childcare.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.nine.childcare.App;
-import com.nine.childcare.manager.DatabaseManager;
 
 public class EnglishLearningViewModel extends BaseViewModel{
     private MutableLiveData<String> searchWord = new MutableLiveData<>();

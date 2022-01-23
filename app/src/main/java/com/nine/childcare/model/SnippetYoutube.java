@@ -1,5 +1,7 @@
 package com.nine.childcare.model;
 
+import android.text.Html;
+
 import com.google.gson.annotations.SerializedName;
 
 public class SnippetYoutube {
@@ -31,7 +33,7 @@ public class SnippetYoutube {
     }
 
     public String getTitle() {
-        return title;
+        return Html.fromHtml(title).toString();
     }
 
     public void setTitle(String title) {
@@ -39,7 +41,7 @@ public class SnippetYoutube {
     }
 
     public String getDescription() {
-        return description;
+        return Html.fromHtml(description).toString();
     }
 
     public void setDescription(String description) {

@@ -2,8 +2,6 @@ package com.nine.childcare.viewmodel;
 
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,6 +19,7 @@ public class QuizViewModel extends BaseViewModel {
     private DatabaseReference quesIdRef;
 
     public QuizViewModel() {
+        // get question id from firebase
         quesIdRef = firebaseDatabase.getReference("users").child(firebaseAuth.getCurrentUser().getUid()).child("quesId");
         quesIdRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -33,7 +32,7 @@ public class QuizViewModel extends BaseViewModel {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                errorMessage.postValue(error.getMessage());
             }
         });
     }
@@ -42,6 +41,7 @@ public class QuizViewModel extends BaseViewModel {
         mId++;
         currentQues = databaseManager.getQuestion(mId);
         questionMutableLiveData.setValue(currentQues);
+        //everytime go to next question, update data to firebase
         quesIdRef.setValue(mId);
     }
 

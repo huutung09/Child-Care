@@ -39,10 +39,7 @@ public class MapsFragment extends Fragment {
 
     private OnMapReadyCallback readyCallback = new OnMapReadyCallback() {
         @Override
-        public void onMapReady(GoogleMap googleMap) {
-//            LatLng sydney = new LatLng(-34, 151);
-//            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        public void onMapReady(@NonNull GoogleMap googleMap) {
             mMap = googleMap;
             updateLocationUI();
             getDeviceLocation();
@@ -70,6 +67,7 @@ public class MapsFragment extends Fragment {
         view.findViewById(R.id.btn_map).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get location at camera position and pass data to sign up fragment
                 LatLng latLng = mMap.getCameraPosition().target;
                 gotoSignUpFragment(latLng);
             }
@@ -95,6 +93,7 @@ public class MapsFragment extends Fragment {
         }
     }
 
+    // check permision for location
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -114,18 +113,17 @@ public class MapsFragment extends Fragment {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         locationPermissionGranted = false;
-        switch (requestCode) {
-            case Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
-                }
+        if (requestCode == Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
             }
         }
         updateLocationUI();
         getDeviceLocation();
     }
 
+    // get current location of user
     private void getDeviceLocation() {
         try {
             if (locationPermissionGranted) {
@@ -138,13 +136,11 @@ public class MapsFragment extends Fragment {
                             if (lastKnownLocation != null) {
                                 LatLng current = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                                 mMap.addMarker(new MarkerOptions().position(current).title("You are here"));
-//                                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-//                                mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, Constants.DEFAULT_ZOOM), 1000, null);
                             }
                         } else {
-//                            Log.d(TAG, "Current location is null. Using defaults.");
-//                            Log.e(TAG, "Exception: %s", task.getException());
+                            Log.d("err", "Current location is null. Using defaults.");
+                            Log.e("err", "Exception: %s", task.getException());
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }

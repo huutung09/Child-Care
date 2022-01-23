@@ -1,22 +1,11 @@
 package com.nine.childcare.views.fragment;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.nine.childcare.Constants;
 import com.nine.childcare.R;
@@ -28,7 +17,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpViewModel> {
-    private double currentLongitude, currentLatitude;
     private LatLng latLng;
 
     @Override
@@ -43,21 +31,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
 
     @Override
     protected void initViews() {
-        if (latLng != null) {
-            Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
-            try {
-                    List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                    if (addressList != null && addressList.size() > 0) {
-                        String locality = addressList.get(0).getAddressLine(0);
-                        if (!locality.isEmpty()){
-                            binding.edtSignUpAddress.setText(locality);
-                        }
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
+        getAddress();
         binding.tvSignUpSignIn.setOnClickListener(v -> gotoSignInFragment());
         binding.btnSignUp.setOnClickListener(v -> signUpUser());
         binding.edtSignUpAddress.setOnClickListener(v -> gotoMapFragment());
@@ -70,12 +44,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                 }
             }
         });
-        mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                makeToast(s);
-            }
-        });
+        mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), this::makeToast);
     }
 
 
@@ -88,37 +57,24 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
         mViewModel.signUp(name, email, password, cPassword, latLng.latitude, latLng.longitude, address);
     }
 
-//    private void handleLocation() {
-//        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-//            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Location> task) {
-//                    Location location = task.getResult();
-//                    if (location != null) {
-//                        try {
-//                            Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
-//                            List<Address> addresses = geocoder.getFromLocation(
-//                                    location.getLatitude(), location.getLongitude(), 1
-//                            );
-//                            binding.edtSignUpAddress.setText(addresses.get(0).getAddressLine(0));
-//                            currentLatitude = addresses.get(0).getLatitude();
-//                            currentLongitude = addresses.get(0).getLongitude();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        makeToast("no location");
-//                    }
-//                }
-//            });
-//        } else {
-//            ActivityCompat.requestPermissions(requireActivity(),
-//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-//        }
+    // get string location from latitude and longitude
+    private void getAddress() {
+        if (latLng != null) {
+            Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
+            try {
+                List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                if (addressList != null && addressList.size() > 0) {
+                    String locality = addressList.get(0).getAddressLine(0);
+                    if (!locality.isEmpty()){
+                        binding.edtSignUpAddress.setText(locality);
+                    }
+                }
 
-//    }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void setLatLng(LatLng latLng) {
         this.latLng = latLng;

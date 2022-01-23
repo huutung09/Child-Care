@@ -44,6 +44,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
+    // copy data base from assert to database file in device explorer
     private void copyDataBase() {
         try {
             String outFileName =  Constants.DATABASE_PATH +  Constants.DATABASE_NAME;
@@ -68,8 +69,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         boolean checkDB = false;
         try {
             String myPath =  Constants.DATABASE_PATH +  Constants.DATABASE_NAME;
-            File dbfile = new File(myPath);
-            checkDB = dbfile.exists();
+            File dbFile = new File(myPath);
+            checkDB = dbFile.exists();
         }
         catch(SQLiteException e) {
             e.printStackTrace();
@@ -83,7 +84,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
-    public synchronized void closeDataBase()throws SQLException
+    public void closeDataBase()throws SQLException
     {
         if(database != null)
             database.close();
@@ -106,6 +107,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String trueCase = cursor.getString(cursor.getColumnIndexOrThrow("DapAnDung"));
         Question question = new Question(id, ques, caseA, caseB, caseC, caseD, trueCase);
         closeDataBase();
+        cursor.close();
         return question;
     }
 
@@ -119,6 +121,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.moveToFirst();
         String mean = cursor.getString(cursor.getColumnIndexOrThrow("nghia"));
         closeDataBase();
+        cursor.close();
         return mean;
     }
 

@@ -16,7 +16,7 @@
         android:title="@string/video" />
 
     <item
-        android:id="@+id/navigation_book"
-        android:icon="@drawable/ic_book"
-        android:title="@string/book" />
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
 </menu>

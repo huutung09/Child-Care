@@ -1,8 +1,5 @@
 package com.google.android.youtube.player;
 
-/**
- * Please create this directories schema com.google.android.youtube.player and post the file there
- */
 
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -15,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.youtube.player.internal.ab;
 
+// because youtube player support fragment have not migrate to android x
 public class YouTubePlayerSupportFragmentX extends Fragment implements YouTubePlayer.Provider {
     private final YouTubePlayerSupportFragmentX.a a = new YouTubePlayerSupportFragmentX.a();
     private Bundle b;

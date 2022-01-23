@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:padding="20dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="56dp">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -16,7 +15,7 @@
         android:id="@+id/question_content"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/background_ques"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,62 +27,39 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_sound"
+        android:layout_marginTop="-20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/question_content" />
 
     <TextView
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
+       style="@style/quizAns"
         android:id="@+id/ans_a"
         android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/background_ans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question_content" />
 
     <TextView
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
+        style="@style/quizAns"
         android:id="@+id/ans_b"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/background_ans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans_a" />
 
     <TextView
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
+        style="@style/quizAns"
         android:id="@+id/ans_c"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/background_ans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans_b" />
 
     <TextView
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
+        style="@style/quizAns"
         android:id="@+id/ans_d"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/background_ans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans_c" />

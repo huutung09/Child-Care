@@ -3,6 +3,7 @@ package com.nine.childcare.layout;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,11 +60,13 @@ public class GrandMotionLayout extends MotionLayout {
         viewToDetectTouch = ((View) getParent()).findViewById(R.id.viewBackground);
     }
 
+    // if drag on the youtube player view -> block event from motion layout go to youtube player view
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }
 
+    // if not touch on video -> on touch event return false -> event go to parent of motion layout
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getActionMasked() == MotionEvent.ACTION_UP || event.getActionMasked() == MotionEvent.ACTION_CANCEL) {

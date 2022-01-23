@@ -44,7 +44,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         Glide.with(holder.itemView.getContext())
                 .load(i.getSnippet().getThumbnails().getMedium().getUrl())
                 .into(holder.itemRowImg);
-        holder.id = i.getId().getVideoId();
+        holder.currentItem = i;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public LinearLayout itemRowContainer;
         public ImageView itemRowImg;
         public TextView itemRowTitle, itemRowTime;
-        public String id;
+        public ItemYoutube currentItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,7 +68,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        listener.onClick(id);
+                        listener.onClick(currentItem);
                     }
                 }
             });

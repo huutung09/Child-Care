@@ -15,12 +15,12 @@
             android:layout_height="0dp"
             android:layout_marginEnd="10dp"
             android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@id/youtube_text_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/youtube_fragment"
             app:layout_constraintTop_toTopOf="@id/youtube_fragment" />
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        <fragment
             android:id="@+id/youtube_fragment"
             android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"
             android:layout_width="0dp"
@@ -34,32 +34,38 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="16dp"
-            android:src="@android:drawable/ic_menu_search"
+            android:src="@android:drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@+id/youtube_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/youtube_fragment"
-            app:layout_constraintTop_toTopOf="@+id/youtube_fragment"
-            app:tint="@android:color/darker_gray" />
+            app:layout_constraintTop_toTopOf="@+id/youtube_fragment" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/youtube_fragment"-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="55dp"-->
-<!--                    android:src="@drawable/ic_launcher_background"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:layout_marginBottom="65dp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
+            android:padding="10dp"
+            android:id="@+id/youtube_text_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/youtube_fragment" />
+            app:layout_constraintTop_toBottomOf="@id/youtube_fragment">
+
+            <TextView
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/youtube_title"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/secondary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/youtube_description"/>
+        </LinearLayout>
 
     </com.nine.childcare.layout.GrandMotionLayout>
 </layout>

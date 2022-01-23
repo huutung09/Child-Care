@@ -1,7 +1,5 @@
 package com.nine.childcare.viewmodel;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -27,10 +25,13 @@ public class VideoViewModel extends BaseViewModel {
     }
 
     public void getVideoList(String searchTerm, Boolean newSearch) {
+        // if new search clear array and reset next page token
         if (newSearch) {
             nextPage = "";
             itemYoutubeArrayList.clear();
         }
+        // if not new search -> infinite scroll
+        // add video and update next page
         call = YoutubeApiClient.getYoutubeApiInterface().getYoutubeData(Constants.API_KEY, "snippet", searchTerm, nextPage);
         call.enqueue(new Callback<FullYoutube>() {
             @Override
@@ -45,7 +46,7 @@ public class VideoViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(@NonNull Call<FullYoutube> call, @NonNull Throwable t) {
-                Log.e("out", "onFailure: ");
+                errorMessage.postValue(t.getMessage());
             }
         });
     }

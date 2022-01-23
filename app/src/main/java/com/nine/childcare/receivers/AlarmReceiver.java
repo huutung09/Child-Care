@@ -11,7 +11,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.nine.childcare.Constants;
 import com.nine.childcare.R;
-import com.nine.childcare.views.act.HomeActivity;
 import com.nine.childcare.views.act.MainActivity;
 
 public class AlarmReceiver extends BroadcastReceiver {
