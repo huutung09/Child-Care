@@ -16,27 +16,27 @@ public class SignInViewModel extends BaseViewModel {
     public SignInViewModel() {
         // check if already sign in
         if (firebaseAuth.getCurrentUser() != null) {
-            userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
-            loggedOut.postValue(false);
+            userMutableLiveData.setValue(firebaseAuth.getCurrentUser());
+            loggedOut.setValue(false);
         }
     }
 
     public void signIn(String email, String password) {
         if (email.isEmpty()){
-            errorMessage.postValue("Please enter email!");
+            errorMessage.setValue("Please enter email!");
         } else if (password.isEmpty()){
-            errorMessage.postValue("Please enter password!");
+            errorMessage.setValue("Please enter password!");
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            errorMessage.postValue("Please enter valid email");
+            errorMessage.setValue("Please enter valid email");
         } else {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                                userMutableLiveData.setValue(firebaseAuth.getCurrentUser());
                             } else {
-                                errorMessage.postValue(task.getException().toString());
+                                errorMessage.setValue(task.getException().toString());
                             }
                         }
                     });

@@ -18,4 +18,6 @@
     <string name="channel_name">Alarm channel</string>
     <string name="channel_description">This is alarm channel</string>
     <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="sign_out">Sign out</string>
 </resources>

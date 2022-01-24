@@ -11,9 +11,8 @@ public class EnglishLearningViewModel extends BaseViewModel{
         if (wordMean != null) {
             searchWord.setValue(wordMean);
         } else {
-            searchWord.setValue("KKhông có từ");
+            searchWord.setValue("KKKhông có từ");
         }
-
     }
 
     public MutableLiveData<String> getSearchWord() {

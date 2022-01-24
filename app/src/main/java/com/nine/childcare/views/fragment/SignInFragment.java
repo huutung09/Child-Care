@@ -1,5 +1,9 @@
 package com.nine.childcare.views.fragment;
 
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -20,7 +24,7 @@ public class SignInFragment extends BaseFragment<SignInFragmentBinding, SignInVi
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         binding.tvSignInCreateAccount.setOnClickListener(v -> gotoSignUpFragment());
         binding.btnSignIn.setOnClickListener(v -> signInUser());
 
@@ -47,6 +51,7 @@ public class SignInFragment extends BaseFragment<SignInFragmentBinding, SignInVi
         String password = binding.edtSignInPassword.getText().toString().trim();
         mViewModel.signIn(email, password);
     }
+
 
     private void gotoSignUpFragment(){
         callBack.callBack(Constants.KEY_SHOW_SIGN_UP, null);

@@ -1,108 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:padding="20dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-
-    <TextView
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:id="@+id/question_content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/background_ques"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_ques_sound"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_sound"
-        android:layout_marginTop="-20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/question_content" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
 
-    <TextView
-       style="@style/quizAns"
-        android:id="@+id/ans_a"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_content" />
 
-    <TextView
-        style="@style/quizAns"
-        android:id="@+id/ans_b"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ans_a" />
+            <TextView
+                android:id="@+id/question_content"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/background_ques"
+                android:gravity="center"
+                android:padding="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        style="@style/quizAns"
-        android:id="@+id/ans_c"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ans_b" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_ques_sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="-20dp"
+                android:src="@drawable/ic_sound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/question_content" />
 
-    <TextView
-        style="@style/quizAns"
-        android:id="@+id/ans_d"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ans_c" />
+            <TextView
+                android:id="@+id/ans_a"
+                style="@style/quizAns"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/question_content" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_ans_a_sound"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_sound"
-        app:layout_constraintEnd_toEndOf="@+id/ans_a"
-        app:layout_constraintTop_toTopOf="@+id/ans_a" />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_ans_b_sound"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_sound"
-        app:layout_constraintEnd_toEndOf="@+id/ans_b"
-        app:layout_constraintTop_toTopOf="@+id/ans_b" />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_ans_c_sound"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_sound"
-        app:layout_constraintEnd_toEndOf="@+id/ans_c"
-        app:layout_constraintTop_toTopOf="@+id/ans_c" />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_ans_d_sound"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_sound"
-        app:layout_constraintEnd_toEndOf="@+id/ans_d"
-        app:layout_constraintTop_toTopOf="@+id/ans_d" />
+            <TextView
+                android:id="@+id/ans_b"
+                style="@style/quizAns"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ans_a" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:visibility="gone"
-        android:id="@+id/btn_next_ques"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_next"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ans_d" />
+            <TextView
+                android:id="@+id/ans_c"
+                style="@style/quizAns"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ans_b" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/ans_d"
+                style="@style/quizAns"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ans_c" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_ans_a_sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_sound"
+                app:layout_constraintEnd_toEndOf="@+id/ans_a"
+                app:layout_constraintTop_toTopOf="@+id/ans_a" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_ans_b_sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_sound"
+                app:layout_constraintEnd_toEndOf="@+id/ans_b"
+                app:layout_constraintTop_toTopOf="@+id/ans_b" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_ans_c_sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_sound"
+                app:layout_constraintEnd_toEndOf="@+id/ans_c"
+                app:layout_constraintTop_toTopOf="@+id/ans_c" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_ans_d_sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_sound"
+                app:layout_constraintEnd_toEndOf="@+id/ans_d"
+                app:layout_constraintTop_toTopOf="@+id/ans_d" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_next_ques"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_next"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ans_d" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

@@ -1,5 +1,9 @@
 package com.nine.childcare.views.fragment;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+
 import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.databinding.SplashFragmentBinding;
@@ -17,7 +21,7 @@ public class SplashFragment extends BaseFragment<SplashFragmentBinding, SplashVi
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         mViewModel.changeState();
         mViewModel.getSplashState().observe(getViewLifecycleOwner(), aBoolean -> gotoSignAct());
     }

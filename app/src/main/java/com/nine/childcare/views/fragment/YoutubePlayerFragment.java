@@ -34,7 +34,7 @@ public class YoutubePlayerFragment extends BaseFragment<YoutubePlayerFragmentBin
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +64,6 @@ public class YoutubePlayerFragment extends BaseFragment<YoutubePlayerFragmentBin
                 });
     }
 
-    public static YoutubePlayerFragment newInstance() {
-        return new YoutubePlayerFragment();
-    }
 
     public void setCurrentVideo(ItemYoutube currentVideo) {
         this.currentVideo = currentVideo;

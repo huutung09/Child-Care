@@ -32,9 +32,11 @@ public abstract class BaseFragment<K extends ViewDataBinding, V extends ViewMode
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(getViewModelClass());
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        initViews();
+        initViews(savedInstanceState);
         return binding.getRoot();
     }
+
+
 
     public void makeToast(String message){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
@@ -44,5 +46,5 @@ public abstract class BaseFragment<K extends ViewDataBinding, V extends ViewMode
 
     protected abstract int getLayoutId();
 
-    protected abstract void initViews();
+    protected abstract void initViews(@Nullable Bundle savedInstanceState);
 }

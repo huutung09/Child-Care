@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         if (key.equals(Constants.KEY_SHOW_SIGN_ACT)) {
             Intent intent = new Intent(this, SignActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
@@ -17,7 +22,7 @@
             style="@style/settingText"
             android:id="@+id/profile_user_name"
             android:text="@string/app_name"
-            app:drawableStartCompat="@drawable/ic_setting_name"
+            app:drawableStartCompat="@drawable/ic_profile_name"
            />
 
         <TextView
@@ -25,7 +30,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/profile_email"
             android:text="@string/app_name"
-            app:drawableStartCompat="@drawable/ic_setting_mail"
+            app:drawableStartCompat="@drawable/ic_profile_mail"
             />
 
         <TextView
@@ -33,15 +38,15 @@
             android:layout_marginTop="20dp"
             android:id="@+id/profile_address"
             android:text="@string/app_name"
-            app:drawableStartCompat="@drawable/ic_setting_addess"
+            app:drawableStartCompat="@drawable/ic_profile_address"
             />
-
         <TextView
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             style="@style/settingText"
             android:id="@+id/btn_logout"
-            android:text="Sign out"
-            app:drawableStartCompat="@drawable/ic_logout" />
+            android:text="@string/sign_out"
+            app:drawableStartCompat="@drawable/ic_logout"
+            android:layout_marginBottom="30dp"/>
     </LinearLayout>
-
+    </ScrollView>
 </layout>

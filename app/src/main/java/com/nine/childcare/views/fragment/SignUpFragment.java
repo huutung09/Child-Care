@@ -2,7 +2,11 @@ package com.nine.childcare.views.fragment;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -18,6 +22,7 @@ import java.util.Locale;
 
 public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpViewModel> {
     private LatLng latLng;
+    private String name, email, password, cPassword, address;
 
     @Override
     protected Class<SignUpViewModel> getViewModelClass() {
@@ -30,8 +35,18 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
     }
 
     @Override
-    protected void initViews() {
-        getAddress();
+    protected void initViews(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            name = savedInstanceState.getString("name").trim();
+            email = savedInstanceState.getString("email").trim();
+            password = savedInstanceState.getString("password").trim();
+            cPassword = savedInstanceState.getString("cPassword").trim();
+            binding.edtSignUpName.setText(name);
+            binding.edtSignUpEmail.setText(email);
+            binding.edtSignUpPassword.setText(password);
+            binding.edtSignUpConfirmPassword.setText(cPassword);
+        }
+
         binding.tvSignUpSignIn.setOnClickListener(v -> gotoSignInFragment());
         binding.btnSignUp.setOnClickListener(v -> signUpUser());
         binding.edtSignUpAddress.setOnClickListener(v -> gotoMapFragment());
@@ -49,16 +64,16 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
 
 
     private void signUpUser() {
-        String name = binding.edtSignUpName.getText().toString().trim();
-        String email = binding.edtSignUpEmail.getText().toString().trim();
-        String password = binding.edtSignUpPassword.getText().toString().trim();
-        String cPassword = binding.edtSignUpConfirmPassword.getText().toString().trim();
-        String address = binding.edtSignUpAddress.getText().toString().trim();
-        mViewModel.signUp(name, email, password, cPassword, latLng.latitude, latLng.longitude, address);
+        mViewModel.signUp( binding.edtSignUpName.getText().toString().trim(),
+                binding.edtSignUpEmail.getText().toString().trim(),
+                binding.edtSignUpPassword.getText().toString().trim(),
+                binding.edtSignUpConfirmPassword.getText().toString().trim(),
+                latLng.latitude, latLng.longitude,
+                binding.edtSignUpAddress.getText().toString().trim());
     }
 
     // get string location from latitude and longitude
-    private void getAddress() {
+    public void getAddress() {
         if (latLng != null) {
             Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
             try {
@@ -66,6 +81,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                 if (addressList != null && addressList.size() > 0) {
                     String locality = addressList.get(0).getAddressLine(0);
                     if (!locality.isEmpty()){
+                        address = locality;
                         binding.edtSignUpAddress.setText(locality);
                     }
                 }
@@ -87,4 +103,20 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
     private void gotoMapFragment() {
         callBack.callBack(Constants.KEY_SHOW_MAP, null);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("name", binding.edtSignUpName.getText().toString().trim());
+        outState.putString("email", binding.edtSignUpEmail.getText().toString().trim());
+        outState.putString("password", binding.edtSignUpPassword.getText().toString().trim());
+        outState.putString("cPassword", binding.edtSignUpConfirmPassword.getText().toString().trim());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAddress();
+    }
+
 }

@@ -31,7 +31,7 @@ public class ProfileViewModel extends BaseViewModel{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                errorMessage.postValue(error.getMessage());
+                errorMessage.setValue(error.getMessage());
             }
         });
 

@@ -46,7 +46,7 @@ public class VideoViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(@NonNull Call<FullYoutube> call, @NonNull Throwable t) {
-                errorMessage.postValue(t.getMessage());
+                errorMessage.setValue(t.getMessage());
             }
         });
     }

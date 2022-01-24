@@ -1,9 +1,11 @@
 package com.nine.childcare.views.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +40,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
 
         binding.videoRecycleView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(requireContext());
@@ -52,7 +54,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
                 // if first time play video, add new fragment
                 //second time just change video
                 if (youtubePlayerFragment == null) {
-                    youtubePlayerFragment = YoutubePlayerFragment.newInstance();
+                    youtubePlayerFragment = new YoutubePlayerFragment();
                     youtubePlayerFragment.setCurrentVideo(youtubeVideo);
                     fragmentTransaction.add(R.id.youtube_player_container, youtubePlayerFragment, "tag");
                     fragmentTransaction.addToBackStack("add");

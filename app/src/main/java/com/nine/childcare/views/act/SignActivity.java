@@ -11,39 +11,42 @@ import com.nine.childcare.views.fragment.SignInFragment;
 import com.nine.childcare.views.fragment.SignUpFragment;
 
 public class SignActivity extends BaseActivity<SignActivityBinding> {
+    private final SignInFragment signInFragment = new SignInFragment();
+    private final SignUpFragment signUpFragment = new SignUpFragment();
+    private final MapsFragment mapsFragment = new MapsFragment();
+
 
     @Override
     public void callBack(String key, Object data) {
         switch (key) {
             case Constants.KEY_SHOW_SIGN_IN:
-                SignInFragment signInFragment = new SignInFragment();
                 signInFragment.setCallBack(this);
                 replaceFragment(R.id.sign_container_view, signInFragment, false);
                 break;
             case Constants.KEY_SHOW_SIGN_UP:
-                SignUpFragment signUpFragment = new SignUpFragment();
                 signUpFragment.setCallBack(this);
                 if (data != null) {
                     signUpFragment.setLatLng((LatLng) data);
                 }
-                replaceFragment(R.id.sign_container_view, signUpFragment, false);
+                replaceFragment(R.id.sign_container_view, signUpFragment, true);
                 break;
             case Constants.KEY_SHOW_MAP:
-                MapsFragment mapsFragment = new MapsFragment();
                 mapsFragment.setCallBack(this);
                 replaceFragment(R.id.sign_container_view, mapsFragment, true);
                 break;
             case Constants.KEY_SHOW_HOME_ACT:
                 Intent homeIntent = new Intent(this, HomeActivity.class);
                 startActivity(homeIntent);
+                finish();
                 break;
         }
     }
 
     @Override
     protected void initViews() {
-        SignInFragment signInFragment = new SignInFragment();
         signInFragment.setCallBack(this);
+        signUpFragment.setCallBack(this);
+        mapsFragment.setCallBack(this);
         replaceFragment(R.id.sign_container_view, signInFragment, false);
     }
 

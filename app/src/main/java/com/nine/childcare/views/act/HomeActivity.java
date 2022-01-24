@@ -83,6 +83,7 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
         if (key.equals(Constants.KEY_SHOW_SIGN_ACT)) {
             Intent intent = new Intent(HomeActivity.this, SignActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

@@ -38,19 +38,19 @@ public class SignUpViewModel extends BaseViewModel{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             databaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getUid());
-                            User user = new User(firebaseAuth.getUid(), name, email, address, longitude, latitude, 0);
+                            User user = new User(firebaseAuth.getUid(), name, email, address, longitude, latitude, 1);
                             databaseReference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                                        userMutableLiveData.setValue(firebaseAuth.getCurrentUser());
                                     } else {
-                                        errorMessage.postValue(task.getException().toString());
+                                        errorMessage.setValue(task.getException().toString());
                                     }
                                 }
                             });
                         } else {
-                            errorMessage.postValue(task.getException().toString());
+                            errorMessage.setValue(task.getException().toString());
                         }
                     }
                 });

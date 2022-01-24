@@ -1,6 +1,9 @@
 package com.nine.childcare.views.fragment;
 
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.nine.childcare.Constants;
@@ -22,7 +25,7 @@ public class ProfileFragment extends BaseFragment<ProfileFragmentBinding, Profil
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         mViewModel.getUserData();
         binding.btnLogout.setOnClickListener(v -> mViewModel.signOut());
         mViewModel.getLoggedOut().observe(getViewLifecycleOwner(), aBoolean -> gotoSignAct());

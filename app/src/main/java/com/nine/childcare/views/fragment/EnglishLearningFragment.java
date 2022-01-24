@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.tool.util.StringUtils;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -17,6 +18,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.nine.childcare.R;
@@ -38,7 +40,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         mViewModel.getSearchWord().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {

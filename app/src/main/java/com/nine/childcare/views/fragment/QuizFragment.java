@@ -1,6 +1,7 @@
 package com.nine.childcare.views.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.nine.childcare.R;
@@ -36,7 +38,7 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(@Nullable Bundle savedInstanceState) {
         textToSpeech = new TextToSpeech(requireActivity().getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {

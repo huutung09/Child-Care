@@ -24,18 +24,21 @@
                 style="@style/inputText"
                 android:hint="@string/video"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_video_search"
+                android:inputType="text" />
 
             <Button
                 app:layout_constraintTop_toTopOf="@id/edt_video_search"
                 app:layout_constraintBottom_toBottomOf="@+id/edt_video_search"
                 app:layout_constraintStart_toEndOf="@+id/edt_video_search"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/btn_video_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/buttonRegLog"
                 android:letterSpacing="0"
-                android:text="Search"
+                android:text="@string/search"
               />
 
             <androidx.recyclerview.widget.RecyclerView

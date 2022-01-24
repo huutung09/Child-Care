@@ -43,7 +43,4 @@ public abstract class BaseActivity<BD extends ViewDataBinding> extends AppCompat
         ft.commit();
     }
 
-    @Override
-    public void onBackPressed() {
-    }
 }
