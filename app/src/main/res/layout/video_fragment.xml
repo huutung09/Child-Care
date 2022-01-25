@@ -20,9 +20,12 @@
 
             <EditText
                 android:layout_width="250dp"
+                android:layout_height="50dp"
                 android:id="@+id/edt_video_search"
-                style="@style/inputText"
                 android:hint="@string/video"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/background_input"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_video_search"

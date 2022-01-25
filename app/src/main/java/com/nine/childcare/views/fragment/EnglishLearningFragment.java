@@ -52,13 +52,7 @@ public class EnglishLearningFragment extends BaseFragment<EnglishLearningFragmen
             @Override
             public void onClick(View v) {
                 mViewModel.getWordFromDataBase(binding.englishWordSearch.getText().toString().trim());
-
-                // hide keyboard
-                View view = requireActivity().getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
+                hideKeyBoard();
             }
         });
 

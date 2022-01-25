@@ -89,7 +89,7 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
 
     public void makeAlarmNotification() {
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long timeAtCurrent = System.currentTimeMillis();
         alarmManager.setInexactRepeating(AlarmManager.RTC, timeAtCurrent + AlarmManager.INTERVAL_DAY, AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -97,7 +97,7 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
 
     public void cancelAlarmNotification(){
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarmManager == null) {
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

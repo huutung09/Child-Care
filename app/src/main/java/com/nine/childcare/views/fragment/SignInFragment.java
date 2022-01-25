@@ -1,7 +1,6 @@
 package com.nine.childcare.views.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -50,6 +49,7 @@ public class SignInFragment extends BaseFragment<SignInFragmentBinding, SignInVi
         String email = binding.edtSignInEmail.getText().toString().trim();
         String password = binding.edtSignInPassword.getText().toString().trim();
         mViewModel.signIn(email, password);
+        hideKeyBoard();
     }
 
 

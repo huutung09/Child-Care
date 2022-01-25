@@ -1,9 +1,11 @@
 package com.nine.childcare.views.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,9 +39,16 @@ public abstract class BaseFragment<K extends ViewDataBinding, V extends ViewMode
     }
 
 
-
-    public void makeToast(String message){
+    protected void makeToast(String message){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void hideKeyBoard() {
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     protected abstract Class<V> getViewModelClass();

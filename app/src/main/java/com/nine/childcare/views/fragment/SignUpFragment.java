@@ -22,7 +22,6 @@ import java.util.Locale;
 
 public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpViewModel> {
     private LatLng latLng;
-    private String name, email, password, cPassword, address;
 
     @Override
     protected Class<SignUpViewModel> getViewModelClass() {
@@ -37,10 +36,10 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
     @Override
     protected void initViews(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            name = savedInstanceState.getString("name").trim();
-            email = savedInstanceState.getString("email").trim();
-            password = savedInstanceState.getString("password").trim();
-            cPassword = savedInstanceState.getString("cPassword").trim();
+            String name = savedInstanceState.getString("name").trim();
+            String email = savedInstanceState.getString("email").trim();
+            String password = savedInstanceState.getString("password").trim();
+            String cPassword = savedInstanceState.getString("cPassword").trim();
             binding.edtSignUpName.setText(name);
             binding.edtSignUpEmail.setText(email);
             binding.edtSignUpPassword.setText(password);
@@ -70,6 +69,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                 binding.edtSignUpConfirmPassword.getText().toString().trim(),
                 latLng.latitude, latLng.longitude,
                 binding.edtSignUpAddress.getText().toString().trim());
+        hideKeyBoard();
     }
 
     // get string location from latitude and longitude
@@ -81,7 +81,6 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                 if (addressList != null && addressList.size() > 0) {
                     String locality = addressList.get(0).getAddressLine(0);
                     if (!locality.isEmpty()){
-                        address = locality;
                         binding.edtSignUpAddress.setText(locality);
                     }
                 }

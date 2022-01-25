@@ -40,7 +40,7 @@ public class ProfileFragment extends BaseFragment<ProfileFragmentBinding, Profil
         mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), this::makeToast);
     }
 
-    public void gotoSignAct() {
+    private void gotoSignAct() {
         callBack.callBack(Constants.KEY_SHOW_SIGN_ACT, null);
     }
 }
