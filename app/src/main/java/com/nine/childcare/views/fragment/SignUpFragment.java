@@ -22,6 +22,8 @@ import java.util.Locale;
 
 public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpViewModel> {
     private LatLng latLng;
+    private double longitude = 0;
+    private double latitude = 0;
 
     @Override
     protected Class<SignUpViewModel> getViewModelClass() {
@@ -48,7 +50,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
 
         binding.tvSignUpSignIn.setOnClickListener(v -> gotoSignInFragment());
         binding.btnSignUp.setOnClickListener(v -> signUpUser());
-        binding.edtSignUpAddress.setOnClickListener(v -> gotoMapFragment());
+        binding.btnSignUpMap.setOnClickListener(v -> gotoMapFragment());
         mViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
@@ -67,7 +69,7 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                 binding.edtSignUpEmail.getText().toString().trim(),
                 binding.edtSignUpPassword.getText().toString().trim(),
                 binding.edtSignUpConfirmPassword.getText().toString().trim(),
-                latLng.latitude, latLng.longitude,
+                latitude, longitude,
                 binding.edtSignUpAddress.getText().toString().trim());
         hideKeyBoard();
     }
@@ -82,6 +84,8 @@ public class SignUpFragment extends BaseFragment<SignUpFragmentBinding, SignUpVi
                     String locality = addressList.get(0).getAddressLine(0);
                     if (!locality.isEmpty()){
                         binding.edtSignUpAddress.setText(locality);
+                        latitude = latLng.latitude;
+                        longitude = latLng.longitude;
                     }
                 }
 

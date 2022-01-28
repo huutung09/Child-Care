@@ -19,10 +19,10 @@ public class SignUpViewModel extends BaseViewModel{
     public void signUp(String name, String email, String password, String cPassword, double latitude, double longitude, String address) {
         if (!password.equals(cPassword)){
             errorMessage.setValue("Password and confirm password must be the same");
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            errorMessage.setValue("Please enter valid email");
         } else  if (email.isEmpty() || name.isEmpty() || password.isEmpty()) {
             errorMessage.setValue("Please fill out the form");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            errorMessage.setValue("Please enter valid email");
         } else if (address.isEmpty()) {
             errorMessage.setValue("Please allow location!");
         }else {

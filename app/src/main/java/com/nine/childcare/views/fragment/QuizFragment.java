@@ -59,7 +59,13 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
         soundButtons.add(binding.btnAnsDSound);
         setButtonListener();
         setAnswerClickable(false);
-        binding.btnQuesSound.setOnClickListener(v -> textToSpeech.speak(binding.questionContent.getText().toString().trim(),TextToSpeech.QUEUE_FLUSH,null,null));
+        binding.btnQuesSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String speakText = binding.questionContent.getText().toString().trim().replaceAll("[.]{2,}", " dot dot dot ");
+                textToSpeech.speak(speakText, TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
         binding.btnNextQues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +100,7 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
     }
 
     private void setButtonListener() {
-        for (int i=0; i < answerButtons.size(); i++) {
+        for (int i = 0; i < answerButtons.size(); i++) {
             TextView a = answerButtons.get(i);
             ImageView img = soundButtons.get(i);
             a.setOnClickListener(v -> handleChooseAnswer(a, answerButtons.indexOf(a)));
@@ -102,7 +108,7 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
                 @Override
                 public void onClick(View v) {
                     if (!a.getText().toString().trim().equals("")) {
-                        textToSpeech.speak(a.getText().toString().substring(3).trim(), TextToSpeech.QUEUE_FLUSH,null,null);
+                        textToSpeech.speak(a.getText().toString().substring(3).trim(), TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 }
             });
@@ -112,7 +118,7 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
 
     private void setAnswerClickable(Boolean b) {
         for (TextView a : answerButtons) {
-           a.setClickable(b);
+            a.setClickable(b);
         }
     }
 
@@ -126,7 +132,7 @@ public class QuizFragment extends BaseFragment<QuizFragmentBinding, QuizViewMode
         }
         binding.btnNextQues.setVisibility(View.VISIBLE);
         String[] quesText = binding.questionContent.getText().toString().trim().split("[.]{2,}");
-        Spannable ansWord = new SpannableString( answerButtons.get(mViewModel.getTrueCase()).getText().toString().substring(2).trim());
+        Spannable ansWord = new SpannableString(answerButtons.get(mViewModel.getTrueCase()).getText().toString().substring(2).trim());
         ansWord.setSpan(new ForegroundColorSpan(Color.YELLOW), 0, ansWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         binding.questionContent.setText("");
         binding.questionContent.append(quesText[0]);

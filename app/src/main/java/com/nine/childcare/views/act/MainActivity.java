@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.nine.childcare.Constants;
 import com.nine.childcare.R;
 import com.nine.childcare.databinding.ActivityMainBinding;
+import com.nine.childcare.receivers.AlarmReceiver;
 import com.nine.childcare.views.fragment.SplashFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {

@@ -2,7 +2,6 @@ package com.nine.childcare.views.fragment;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.tool.util.StringUtils;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;

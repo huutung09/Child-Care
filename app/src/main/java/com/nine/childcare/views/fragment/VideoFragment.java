@@ -2,14 +2,12 @@ package com.nine.childcare.views.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AbsListView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.nine.childcare.R;
 import com.nine.childcare.adapters.VideoAdapter;
@@ -23,9 +21,6 @@ import java.util.ArrayList;
 public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewModel> {
 
     private VideoAdapter videoAdapter;
-    private LinearLayoutManager linearLayoutManager;
-    int pastVisibleItems, visibleItemCount, totalItemCount;
-    private Boolean isScrolling = false;
     private String searchTerm = "";
     private YoutubePlayerFragment youtubePlayerFragment;
 
@@ -43,7 +38,7 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
     protected void initViews(@Nullable Bundle savedInstanceState) {
 
         binding.videoRecycleView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(requireContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.videoRecycleView.setLayoutManager(linearLayoutManager);
         videoAdapter = new VideoAdapter(mViewModel.getItemYoutubeLiveData().getValue());
         binding.videoRecycleView.setAdapter(videoAdapter);
@@ -67,25 +62,14 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
             }
         });
 
-        binding.videoRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    isScrolling = true;
-                }
-            }
 
-            // if scroll at bottom of recycle view -> get new video
+        // if scroll at bottom of recycle view -> get new video
+        binding.viewNestedScroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount = linearLayoutManager.getChildCount();
-                totalItemCount = linearLayoutManager.getItemCount();
-                pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition();
-                if (isScrolling && (visibleItemCount + pastVisibleItems == totalItemCount)) {
-                    isScrolling = false;
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     mViewModel.getVideoList(searchTerm, false);
+                    binding.videoProgressBar.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -95,11 +79,13 @@ public class VideoFragment extends BaseFragment<VideoFragmentBinding, VideoViewM
             public void onClick(View v) {
                 searchTerm = binding.edtVideoSearch.getText().toString().trim();
                 mViewModel.getVideoList(searchTerm, true);
+                binding.videoProgressBar.setVisibility(View.VISIBLE);
             }
         });
         mViewModel.getItemYoutubeLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayList<ItemYoutube>>() {
             @Override
             public void onChanged(ArrayList<ItemYoutube> itemYoutubes) {
+                binding.videoProgressBar.setVisibility(View.GONE);
                 videoAdapter.notifyDataSetChanged();
             }
         });
