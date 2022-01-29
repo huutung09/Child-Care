@@ -84,7 +84,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
-    public void closeDataBase()throws SQLException
+    public synchronized void closeDataBase()throws SQLException
     {
         if(database != null)
             database.close();
